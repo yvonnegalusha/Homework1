@@ -1,0 +1,279 @@
+---
+title: "Homework 1"
+output: html_notebook
+---
+
+| Homework 1                     |               Data Programming in R |
+| :---                           |                                ---: |
+| Due by 11:59 PM on Tue Aug 30  | Business Analytics Graduate Program |
+| Submit via GitHub              |     BAIS:6060 Fall 2022 (Part-Time) |
+
+# Instructions
+
+This homework covers to Module 1. Refer to the corresponding materials
+and ICE (with solutions) posted on ICON.
+
+To complete the homework, fill in the commands needed to finish all of
+the exercises below. Program everything inside this notebook and do not
+change the notebook's filename. If the exercises request that you store
+information within certain variables, use those specific variables names
+(case sensitive). This will assist in grading your homework in a timely
+manner.
+
+For notebooks in general:
+
+- Comment your code so that a classmate, for example, could easily
+follow along.
+
+- Load any required packages using the `library(...)` command.
+However, a notebook should *not* have any `install.packages(...)` or
+`update.packages()` commands.
+
+- Do not use the `View(...)` command in a notebook. Viewing a data
+frame should be done interactively using RStudio's console but is not
+recommended for a notebook that will be run by someone else.
+
+For homeworks in general:
+
+- Be careful not to alter any supplied data files. In particular, if you
+open a CSV file with Excel, do *not* save it with Excel.
+
+- Before turning in a homework, run your entire notebook by choosing
+*Run > Restart R and Run All Chunks* in the RStudio interface.
+Everything should work without error!
+
+- To turn in a homework, unless otherwise instructed, upload *only* your
+notebook to your corresponding GitHub repository. Please do not change
+the notebook's filename. GitHub overwrites the previous version of the
+file when you upload your version.
+
+- If given a data set, there is no need to upload that data set back
+into GitHub. Also, if your code generates any ouput files, such as an
+HTML file, a new data set, or an image, then there is no need to upload
+those files either.
+
+Also included with this homework are the solutions within the included
+file `soln.Rdata`. If you would like to see the solutions, execute
+this command in the console: `load("soln.Rdata", soln <- new.env())`.
+Then you can access the solutions within the object called `soln`.
+For example, `View(soln$df)` will show the contents of the correct
+data frame `df`, and `soln$fib` will show the results of the Fibonacci
+exercise below. These are for your reference. The purpose of the
+homework is for you to create these solutions on your own. Points will
+be deducted if your turned-in notebook uses `soln.Rdata` in any way.
+
+# Exercises
+
+## #1
+
+Save the value 5 in a variable called `KM` (for "kilometers"). Create
+a new variable `MI` (for "miles"), which equals the value `0.62 * KM`.
+Note that the variable names are all upper case and case sensitive.
+
+```{r}
+KM <- 5
+MI <- 0.62 * KM
+
+```
+
+## #2
+
+Use the exact command `mydata <- read.csv("data.csv")` to import
+the included data file `data.csv` and store it in a variable called
+`mydata`.
+
+```{r}
+mydata <- read.csv("data.csv")
+
+```
+
+## #3
+
+Calculate the standard deviation of the data in column `A`, and store
+the standard deviation in a variable called `stdev`.
+
+```{r}
+stdev <- sd(mydata$A)
+
+```
+
+## #4
+
+Install the package called `numbers` (outside of this notebook), load it
+(in this notebook), and use the package's `fibonacci(...)` function to
+calculate the 23-rd Fibonacci number, i.e., plug in `n = 23` into the
+`fibonacci(...)` function. Save the result in a variable called `fib`.
+
+```{r}
+library("numbers")
+fib <- fibonacci(n=23)
+
+```
+
+## #5
+
+Although pointing a laser at an aircraft is a federal crime, many people
+still do it, and the FAA tracks all such reported incidents. Some of
+these incidents are captured in the included file `lasers.csv`. Using
+this file, complete the following:
+
+### (a)
+
+Use `read_csv` to import the data into a data frame called `df` with
+default options except for the following:
+
+i. The `IncidentDate` column should be recognized as containing calendar
+dates via the option `col_date(format = "%d-%b-%y")` to the `cols(...)`
+function, which is itself fed into the `col_types` option of `read_csv`.
+This tells R that the incoming dates from the CSV file use the format
+`"%d-%b-%y"`. (And remember that, once the data is imported correctly, R
+will show dates with the `"%Y-%m-%d"` format.)
+
+ii. The `IncidentTime` column should not be imported.
+
+iii. The `Altitude` column should be read as `integer`. Note that
+`integer` is not the same as `numeric` or `double`.
+
+iv. The `Injury` column should be a factor column.
+
+v. The following eight strings should be read as missing values:
+`""`, `"NA"`, `"N/A"`, `"UNKN"`, `"Unknown"`, `"unknown"`, `"unkwn"`,
+`"Unkwn"`
+
+```{r}
+library(readr)
+my_col_types <-
+    cols(
+        IncidentDate = col_date(format = "%d-%b-%y"),
+        IncidentTime = col_skip(),
+        FlightID = col_character(),
+        Aircraft = col_character(),
+        Altitude = col_integer(),
+        Airport = col_character(),
+        LaserColor = col_character(),
+        Injury = col_factor(),
+        City = col_character(),
+        State = col_character()
+    )
+my_na <- c("", "NA", "N/A", "UNKN", "Unknown", "unknown", "unkwn", "Unkwn")
+df <- read_csv("lasers.csv", col_types = my_col_types, na = my_na)
+
+```
+
+### (b)
+
+Save the number of rows in `df` in the variable `df_numrows`.
+
+```{r}
+df_numrows <- nrow(df)
+
+```
+
+### (c)
+
+Save the total number of missing values in `df` in the variable
+`df_missing`.
+
+```{r}
+df_missing <- sum(is.na(df))
+
+```
+
+### (d)
+
+Ignoring `NA` values, calculate the median altitude (i.e., the median of
+the `Altitude` column), and save it in the variable `df_medalt`.
+
+```{r}
+df_medalt <- median(df$Altitude, na.rm = TRUE)
+
+```
+
+### (e)
+
+Plot a histogram of the natural logarithm (base e) of the `Altitude`
+column. [Why the natural logarithm? It transforms the data so that the
+histogram looks more like a normal distribution.]
+
+```{r}
+hist(log(df$Altitude))
+
+```
+
+### (f)
+
+In a new data frame called `df_small`, save just the rows in positions
+`1005`, `1010`, `1015`, ..., `1050` (by 5's in that order) and just
+columns `FlightID` and `IncidentDate` (in that order).
+
+```{r}
+rows <- 1000 + 5 * (1:10)
+df_small <- df[rows, c("FlightID", "IncidentDate")]
+
+```
+
+### (g)
+
+Write out `df_small` in a CSV file called `lasers_small.csv`.
+
+```{r}
+write_csv(df_small, "lasers_small.csv")
+
+```
+
+## #6
+
+The included file `ABBREV.txt` contains nutritional information from the
+USDA. It is similar to a CSV file except that:
+
+  * there are no column names (do not add any yourself)
+  * the caret `^` is used instead of the comma `,`
+  * the tilde `~` is used instead of the quotation mark `"`.
+
+Taking into account these features, read and store the data in a
+variable called `usda` using the `read_delim` function. Also make sure
+that only the empty string is interpreted as a missing value. [Hint:
+It may help to view the file first with a text editor such as Wordpad.
+However, be sure not to overwrite the original file accidentally.]
+
+```{r}
+# Had to install tidyverse to get readr package
+library(readr)
+usda <- read_delim("ABBREV.txt", col_names = FALSE, delim = "^", quote = "~", na = "")
+
+```
+
+## #7
+
+The included file `coffee.csv` contains coffee-consumption data by
+country. The file is a regular CSV file with the following exceptions:
+the delimiter is `;` and the decimal mark is `,` (instead of `.`).
+
+### (a)
+
+Load and save the data in a data frame called `coffee` using the
+default options, except that you should include options to handle the
+delimiter and decimal mark. [Hint: Use the option
+
+      locale = locale(decimal_mark = ",")
+
+to handle the decimal mark. In the console, `?locale` will provide
+further information on the `locale()` command.]
+
+```{r}
+coffee <- read_delim("coffee.csv", delim = ";", locale = locale(decimal_mark = ","))
+
+```
+
+### (b)
+
+Calculate the mean coffee consumption (ignoring missing values) and
+store it in a variable called `mean_coffee`. [Note: The name of the
+consumption column has a space in it. When dealing with spaces in column
+names, R makes use of the "back tick" mark to make the full column name
+clear.]
+
+```{r}
+mean_coffee <- mean(coffee$`Coffee Consumption`, na.rm = TRUE)
+
+```
