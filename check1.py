@@ -23,6 +23,8 @@ def fcmp(f1,f2):
     
     	# Compare the lines from both file
     	if file_1_line != file_2_line:
+            file_1.close()
+            file_2.close()
             return(False)
         
     	# Read the next line from the file
