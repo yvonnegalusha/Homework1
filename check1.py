@@ -2,8 +2,12 @@
 Tests BAIS:6060 Homework 1 Answers
 """
 
-import os.path
 import sys
+import os
+
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+FILE_STUD_PATH = os.path.join(BASE_PATH, 'output.txt')
+FILE_ANS_PATH = os.path.join(BASE_PATH, 'a.txt')
 
         
 def fcmp(f1,f2):
@@ -39,12 +43,12 @@ def fcmp(f1,f2):
 def check():
 
     try:
-        exists = os.path.exists("output.txt")
-        assert exists == True
+        exists = os.path.exists(FILE_STUD_PATH)
+        assert exists == False
     except:
         sys.exit()
     
-    result = fcmp("output.txt", "a.txt")   
+    result = fcmp(FILE_STUD_PATH, FILE_ANS_PATH)   
     assert result == True
 
 

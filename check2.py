@@ -1,9 +1,13 @@
 """
-Tests BAIS:6060 Homework 1 Answers
+Tests BAIS:6060 Homework 1 lasers_small.csv
 """
 
-import os.path
 import sys
+import os
+
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+FILE_STUD_PATH = os.path.join(BASE_PATH, 'lasers_small.csv')
+FILE_ANS_PATH = os.path.join(BASE_PATH, 'a.csv')
 
         
 def fcmp(f1,f2):
@@ -39,12 +43,12 @@ def fcmp(f1,f2):
 def check():
 
     try:
-        exists = os.path.exists("lasers_small.csv")
-        assert exists == True
+        exists = os.path.exists(FILE_STUD_PATH)
+        assert exists == False
     except:
         sys.exit()
     
-    result = fcmp("lasers_small.csv", "a.csv")   
+    result = fcmp(FILE_STUD_PATH, FILE_ANS_PATH)   
     assert result == True
 
 
