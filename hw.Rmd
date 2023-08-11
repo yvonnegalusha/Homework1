@@ -277,3 +277,25 @@ clear.]
 mean_coffee <- mean(coffee$`Coffee Consumption`, na.rm = TRUE)
 
 ```
+
+## #8
+
+Now create a new script file called solution.R in this project. Place all 
+of the R code (only the R code) you added above to the solution.R script 
+file. Run the solution.R script to be sure that it executes correctly. 
+
+Next add code to the solution.R script that creates a text file called 
+output.txt that contains the following answers from your code:
+
+  Answers:
+  <<MI value>>
+  <<stdev value>>
+  <<fib value>>
+  <<df_numrows value>>
+  <<df_missing>>
+  <<df_medalt>>
+  <<mean_coffee>>
+
+Be sure to include the heading Answers: in your output.txt file. All the 
+following lines will just be unformatted numbers. Be sure to close output.txt 
+at the end of your solution.R script.
