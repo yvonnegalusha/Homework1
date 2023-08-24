@@ -71,8 +71,7 @@ a new variable `MI` (for "miles"), which equals the value `0.62 * KM`.
 Note that the variable names are all upper case and case sensitive.
 
 ```{r}
-KM <- 5
-MI <- 0.62 * KM
+
 
 ```
 
@@ -83,7 +82,7 @@ the included data file `data.csv` and store it in a variable called
 `mydata`.
 
 ```{r}
-mydata <- read.csv("data.csv")
+
 
 ```
 
@@ -93,7 +92,7 @@ Calculate the standard deviation of the data in column `A`, and store
 the standard deviation in a variable called `stdev`.
 
 ```{r}
-stdev <- sd(mydata$A)
+
 
 ```
 
@@ -105,8 +104,7 @@ calculate the 23-rd Fibonacci number, i.e., plug in `n = 23` into the
 `fibonacci(...)` function. Save the result in a variable called `fib`.
 
 ```{r}
-library("numbers")
-fib <- fibonacci(n=23)
+
 
 ```
 
@@ -141,22 +139,6 @@ v. The following eight strings should be read as missing values:
 `"Unkwn"`
 
 ```{r}
-library(readr)
-my_col_types <-
-    cols(
-        IncidentDate = col_date(format = "%d-%b-%y"),
-        IncidentTime = col_skip(),
-        FlightID = col_character(),
-        Aircraft = col_character(),
-        Altitude = col_integer(),
-        Airport = col_character(),
-        LaserColor = col_character(),
-        Injury = col_factor(),
-        City = col_character(),
-        State = col_character()
-    )
-my_na <- c("", "NA", "N/A", "UNKN", "Unknown", "unknown", "unkwn", "Unkwn")
-df <- read_csv("lasers.csv", col_types = my_col_types, na = my_na)
 
 ```
 
@@ -165,7 +147,7 @@ df <- read_csv("lasers.csv", col_types = my_col_types, na = my_na)
 Save the number of rows in `df` in the variable `df_numrows`.
 
 ```{r}
-df_numrows <- nrow(df)
+
 
 ```
 
@@ -175,7 +157,7 @@ Save the total number of missing values in `df` in the variable
 `df_missing`.
 
 ```{r}
-df_missing <- sum(is.na(df))
+
 
 ```
 
@@ -185,7 +167,7 @@ Ignoring `NA` values, calculate the median altitude (i.e., the median of
 the `Altitude` column), and save it in the variable `df_medalt`.
 
 ```{r}
-df_medalt <- median(df$Altitude, na.rm = TRUE)
+
 
 ```
 
@@ -196,7 +178,7 @@ column. [Why the natural logarithm? It transforms the data so that the
 histogram looks more like a normal distribution.]
 
 ```{r}
-hist(log(df$Altitude))
+
 
 ```
 
@@ -207,8 +189,7 @@ In a new data frame called `df_small`, save just the rows in positions
 columns `FlightID` and `IncidentDate` (in that order).
 
 ```{r}
-rows <- 1000 + 5 * (1:10)
-df_small <- df[rows, c("FlightID", "IncidentDate")]
+
 
 ```
 
@@ -217,7 +198,7 @@ df_small <- df[rows, c("FlightID", "IncidentDate")]
 Write out `df_small` in a CSV file called `lasers_small.csv`.
 
 ```{r}
-write_csv(df_small, "lasers_small.csv")
+
 
 ```
 
@@ -237,9 +218,7 @@ It may help to view the file first with a text editor such as Wordpad.
 However, be sure not to overwrite the original file accidentally.]
 
 ```{r}
-# Had to install tidyverse to get readr package
-library(readr)
-usda <- read_delim("ABBREV.txt", col_names = FALSE, delim = "^", quote = "~", na = "")
+
 
 ```
 
@@ -261,7 +240,7 @@ to handle the decimal mark. In the console, `?locale` will provide
 further information on the `locale()` command.]
 
 ```{r}
-coffee <- read_delim("coffee.csv", delim = ";", locale = locale(decimal_mark = ","))
+
 
 ```
 
@@ -274,7 +253,7 @@ names, R makes use of the "back tick" mark to make the full column name
 clear.]
 
 ```{r}
-mean_coffee <- mean(coffee$`Coffee Consumption`, na.rm = TRUE)
+
 
 ```
 
